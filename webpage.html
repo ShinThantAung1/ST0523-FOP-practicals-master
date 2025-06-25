@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gradient Coding Challenge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f1f3f5;
+      padding: 2rem;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h1::before {
+      content: "🧠";
+      font-size: 1.5rem;
+    }
+
+    ul {
+      padding-left: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .editor-container {
+      margin-top: 1.5rem;
+    }
+
+    .CodeMirror {
+      border-radius: 8px;
+      border: 1px solid #d0d7de;
+      font-size: 14px;
+    }
+
+    #run-btn {
+      margin-top: 1rem;
+      background-color: #4f46e5;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #run-btn:hover {
+      background-color: #4338ca;
+    }
+
+    #output {
+      margin-top: 1rem;
+      background: #f8f9fa;
+      border: 1px solid #ced4da;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    code {
+      background: #f1f3f5;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Gradient Coding Challenge</h1>
+    <p>
+      Complete the <code>findGradient</code> function that takes two points on a line and returns the gradient of the line.
+    </p>
+    <ul>
+      <li><strong>Input:</strong> Four numbers <code>x1, y1, x2, y2</code></li>
+      <li><strong>Output:</strong> The gradient as a number</li>
+      <li><strong>Formula:</strong> <code>(y2 - y1) / (x2 - x1)</code></li>
+    </ul>
+
+    <div class="editor-container">
+      <textarea id="code-editor">
+// Complete the function
+function findGradient(x1, y1, x2, y2) {
+  // Your code here
+}
+
+// Test cases
+console.log(findGradient(1, 1, 2, 2));   // 1
+console.log(findGradient(2, 2, 4, 8));   // 3
+console.log(findGradient(3, 3, -4, -25)); // 4
+      </textarea>
+      <button id="run-btn">Run Code</button>
+      <pre id="output">Output will appear here...</pre>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/javascript/javascript.min.js"></script>
+  <script>
+    const editor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+      mode: "javascript",
+      lineNumbers: true,
+      theme: "default"
+    });
+  
+    document.getElementById("run-btn").addEventListener("click", () => {
+      const codeContent = editor.getValue();
+      if (typeof sendCodeToServer === 'function') {
+        sendCodeToServer(codeContent); // Call the function from run.js
+      } else {
+        console.error('❌ sendCodeToServer function is not defined.');
+      }
+    });
+  </script>
+  <script src="test.js"></script>
+</body>
+</html>

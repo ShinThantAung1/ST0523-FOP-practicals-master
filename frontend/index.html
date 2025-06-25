@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Code Quest - Choose Your Challenge!</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f2fe, #f0fdf4);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #334155;
+    }
+
+    .topics-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin: 40px auto;
+      padding: 0 20px;
+      max-width: 1200px;
+    }
+
+    .topic-card {
+      background-color: #ffffff;
+      padding: 25px 40px;
+      border-radius: 18px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #1e293b;
+      width: 200px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      border: 2px solid #e2e8f0;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      background-color: #f0f9ff;
+      border-color: #3b82f6;
+    }
+
+    @media (max-width: 600px) {
+      .topic-card {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Coding Challenge</h1>
+    <p>Choose a topic and start coding</p>
+  </header>
+  <div class="topics-container">
+    <a href="/frontend/qlist/?topic=Functions" class="topic-card">Functions</a>
+    <a href="/frontend/qlist/?topic=Selections" class="topic-card">Selections</a>
+    <a href="/frontend/qlist/?topic=Loop" class="topic-card">Loop</a>
+    <a href="/frontend/qlist/?topic=Arrays" class="topic-card">Arrays</a>
+    <a href="/frontend/qlist/?topic=While" class="topic-card">While</a>
+    <a href="/frontend/qlist/?topic=Objects" class="topic-card">Objects</a>
+    <a href="/frontend/qlist/?topic=ProblemSolving" class="topic-card">Problem Solving</a>
+  </div>
+</body>
+</html>

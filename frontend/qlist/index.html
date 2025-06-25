@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Questions - Coding Challenge</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f2fe, #f0fdf4);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      margin-bottom: 40px;
+      text-align: center;
+      color: #0f172a;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.25em;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: #334155;
+    }
+
+    .questions-list {
+      max-width: 700px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .question-card {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: #1e293b;
+      text-decoration: none;
+      border: 2px solid #e2e8f0;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .question-card:hover {
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      border-color: #3b82f6;
+      background-color: #f0f9ff;
+    }
+
+    .back-button {
+      margin-top: 40px;
+      text-decoration: none;
+      color: #3b82f6;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: 2px solid #3b82f6;
+      padding: 10px 20px;
+      border-radius: 12px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      align-self: center;
+      display: inline-block;
+    }
+
+    .back-button:hover {
+      background-color: #3b82f6;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="topic-title">Loading...</h1>
+    <p>Select a question to start coding</p>
+  </header>
+
+  <div class="questions-list" id="questions-list">
+    <!-- Questions will be generated here -->
+  </div>
+
+  <a href="/frontend/" class="back-button">← Back to Topics</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const topicSlug = params.get('topic') || 'default-topic';
+  
+    const topicMap = {
+      'Functions': { id: 3, name: 'Functions' },
+      'Selections': { id: 4, name: 'Selections' },
+      'Loop': { id: 5, name: 'Loop' },
+      'Arrays': { id: 6, name: 'Arrays' },
+      'While': { id: 7, name: 'While' },
+      'Objects': { id: 8, name: 'Objects' },
+      'Problem Solving': { id: 9, name: 'Problem Solving' }
+    };
+  
+    const topicData = topicMap[topicSlug];
+  
+    // Handle unknown topic
+    if (!topicData) {
+      document.getElementById('topic-title').textContent = 'Unknown Topic';
+      console.error('Invalid topic slug');
+    } else {
+      document.getElementById('topic-title').textContent = topicData.name;
+  
+      const topicId = topicData.id;
+      const questionsList = document.getElementById('questions-list');
+  
+      for (let i = 1; i <= 6; i++) {
+        const questionLink = document.createElement('a');
+        // This points to your frontend route — question.html reads topicId/questionId from URL
+        questionLink.href = `/frontend/questions/index.html?topicId=${topicId}&questionId=${i}`;
+        questionLink.className = 'question-card';
+        questionLink.textContent = `Question ${i}`;
+        questionsList.appendChild(questionLink);
+      }
+    }
+  </script>  
+</body>
+</html>

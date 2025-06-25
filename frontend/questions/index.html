@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Question Viewer</title>
+
+  <!-- CodeMirror CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/neo.min.css">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #f0fdf4);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 900px;
+      margin: 50px auto;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #0f172a;
+      margin-bottom: 20px;
+    }
+
+    pre {
+      background-color: #f8fafc;
+      padding: 15px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      font-size: 1rem;
+      color: #334155;
+      margin-bottom: 20px;
+    }
+
+    .CodeMirror {
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      height: auto;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    #run-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #22c55e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #run-btn:hover {
+      background-color: #16a34a;
+    }
+
+    #output {
+      background-color: #fefce8;
+      padding: 12px;
+      border-radius: 8px;
+      font-family: monospace;
+      color: #92400e;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="question-title">Loading...</h1>
+    <pre id="question-description">Loading description...</pre>
+    <textarea id="code-editor"></textarea>
+
+    <button id="run-btn">Run Code</button>
+    <pre id="output">Output will appear here...</pre>
+  </div>
+
+  <!-- CodeMirror -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+
+  <!-- Your JS logic -->
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const topicId = params.get('topicId');
+    const questionId = params.get('questionId');
+
+    const editor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+      mode: "javascript",
+      lineNumbers: true,
+      theme: "default"
+    });
+
+    if (!topicId || !questionId) {
+      document.getElementById('question-title').innerText = '❌ Missing topicId or questionId in the URL';
+      document.getElementById('question-description').innerText = '';
+      editor.setValue('// Invalid question');
+    } else {
+      fetch(`http://localhost:3000/Db/questions/${topicId}/${questionId}`)
+        .then(response => {
+          if (!response.ok) throw new Error('Question not found');
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById('question-title').innerText = data.questionName || 'Untitled Question';
+          document.getElementById('question-description').innerText = data.explanation || 'No explanation provided.';
+          editor.setValue(data.function || '// No function provided.');
+        })
+        .catch(err => {
+          document.getElementById('question-title').innerText = '⚠️ Error loading question';
+          document.getElementById('question-description').innerText = '';
+          editor.setValue('// Error fetching question');
+          console.error(err);
+        });
+    }
+
+    // 🟢 Connect CodeMirror to run.js
+    document.getElementById("run-btn").addEventListener("click", () => {
+      const codeContent = editor.getValue();
+      if (typeof sendCodeToServer === 'function') {
+        sendCodeToServer(codeContent);
+      } else {
+        console.error('❌ sendCodeToServer function is not defined.');
+      }
+    });
+  </script>
+  <script src="/test.js"></script>
+</body>
+</html>
