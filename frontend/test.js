@@ -11,7 +11,7 @@ function sendCodeToServer(codeContent) {
       return;
     }
   
-    fetch("http://localhost:3000/evaluate", {
+    fetch("https://fop-practical-remote-execution.onrender.com/evaluate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
