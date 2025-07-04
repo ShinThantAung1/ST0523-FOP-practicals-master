@@ -78,9 +78,83 @@
       color: #92400e;
       margin-top: 20px;
     }
+
+    nav {
+  width: 100%;
+  background: linear-gradient(to right, #ffffff, #f0f9ff);
+  padding: 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.nav-logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a {
+  margin-left: 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #334155;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: #e0f2fe;
+  color: #2563eb;
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .nav-links a {
+    margin: 6px 0;
+    width: 100%;
+  }
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
   </style>
 </head>
 <body>
+  <div class="page-wrapper">
+  <nav>
+    <div class="nav-logo">🚀 Code Quest</div>
+    <div class="nav-links">
+      <a href="https://fop-practical-log-collector.onrender.com">Dashboard</a>
+      <a href="/">Home</a>
+    </div>
+  </nav>
+
   <div class="container">
     <h1 id="question-title">Loading...</h1>
     <pre id="question-description">Loading description...</pre>
@@ -89,6 +163,7 @@
     <button id="run-btn">Run Code</button>
     <pre id="output">Output will appear here...</pre>
   </div>
+</div>
 
   <!-- CodeMirror -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>

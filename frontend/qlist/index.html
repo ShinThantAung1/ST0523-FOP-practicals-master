@@ -5,17 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Questions - Coding Challenge</title>
   <style>
+    /* General Body Styles */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to right, #e0f2fe, #f0fdf4);
       margin: 0;
-      padding: 20px;
+      padding: 0;
       min-height: 100vh;
+    }
+
+    /* Navbar */
+    nav {
+      width: 96%;
+      background: linear-gradient(to right, #ffffff, #f0f9ff);
+      padding: 16px 40px;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .nav-logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #0f172a;
+      display: flex;
       align-items: center;
     }
 
+    .nav-links a {
+      margin-left: 24px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: #334155;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background-color: #e0f2fe;
+      color: #2563eb;
+    }
+
+    /* Page Wrapper */
+    .page-wrapper {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Header Section */
     header {
       margin-bottom: 40px;
       text-align: center;
@@ -32,8 +77,8 @@
       color: #334155;
     }
 
+    /* Questions List */
     .questions-list {
-      max-width: 700px;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -41,8 +86,9 @@
     }
 
     .question-card {
+      width: 100%;
       background: white;
-      padding: 20px 30px;
+      padding: 24px 36px;
       border-radius: 15px;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
       font-weight: 600;
@@ -51,6 +97,7 @@
       text-decoration: none;
       border: 2px solid #e2e8f0;
       transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+      box-sizing: border-box;
     }
 
     .question-card:hover {
@@ -59,6 +106,7 @@
       background-color: #f0f9ff;
     }
 
+    /* Back Button */
     .back-button {
       margin-top: 40px;
       text-decoration: none;
@@ -69,7 +117,6 @@
       padding: 10px 20px;
       border-radius: 12px;
       transition: background-color 0.3s ease, color 0.3s ease;
-      align-self: center;
       display: inline-block;
     }
 
@@ -77,24 +124,59 @@
       background-color: #3b82f6;
       color: white;
     }
+
+    /* Mobile Responsive Nav */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px 20px;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .nav-links a {
+        margin: 6px 0;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1 id="topic-title">Loading...</h1>
-    <p>Select a question to start coding</p>
-  </header>
 
-  <div class="questions-list" id="questions-list">
-    <!-- Questions will be generated here -->
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-logo">🚀 Code Quest</div>
+    <div class="nav-links">
+      <a href="https://fop-practical-log-collector.onrender.com">Dashboard</a>
+      <a href="/">Home</a>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="page-wrapper">
+    <header>
+      <h1 id="topic-title">Loading...</h1>
+      <p>Select a question to start coding</p>
+    </header>
+
+    <div class="questions-list" id="questions-list">
+      <!-- Questions will be generated here -->
+    </div>
+
+    <a href="/frontend/" class="back-button">← Back to Topics</a>
   </div>
 
-  <a href="/frontend/" class="back-button">← Back to Topics</a>
-
+  <!-- JavaScript Logic -->
   <script>
     const params = new URLSearchParams(window.location.search);
     const topicSlug = params.get('topic') || 'default-topic';
-  
+
     const topicMap = {
       'Functions': { id: 3, name: 'Functions' },
       'Selections': { id: 4, name: 'Selections' },
@@ -104,28 +186,25 @@
       'Objects': { id: 8, name: 'Objects' },
       'Problem Solving': { id: 9, name: 'Problem Solving' }
     };
-  
+
     const topicData = topicMap[topicSlug];
-  
-    // Handle unknown topic
+
     if (!topicData) {
       document.getElementById('topic-title').textContent = 'Unknown Topic';
       console.error('Invalid topic slug');
     } else {
       document.getElementById('topic-title').textContent = topicData.name;
-  
       const topicId = topicData.id;
       const questionsList = document.getElementById('questions-list');
-  
+
       for (let i = 1; i <= 6; i++) {
         const questionLink = document.createElement('a');
-        // This points to your frontend route — question.html reads topicId/questionId from URL
-        questionLink.href = `/questions/index.html?topicId=${topicId}&questionId=${i}`
+        questionLink.href = `/questions/index.html?topicId=${topicId}&questionId=${i}`;
         questionLink.className = 'question-card';
         questionLink.textContent = `Question ${i}`;
         questionsList.appendChild(questionLink);
       }
     }
-  </script>  
+  </script>
 </body>
 </html>
