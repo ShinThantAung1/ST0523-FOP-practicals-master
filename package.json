@@ -3,9 +3,13 @@
     "className": "DIT/FT/1A/01",
     "scripts": {
         "watch": "node ./.vscode/watch.js",
-        "extract-git-history": "node ./.vscode/visualizer/extract-git-history.js"
+        "extract-git-history": "node ./.vscode/visualizer/extract-git-history.js",
+        "start": "node server.js",
+        "dev": "nodemon server.js"
     },
     "dependencies": {
-        "axios": "^1.9.0"
+        "axios": "^1.9.0",
+        "express": "^4.21.2",
+        "nodemon": "^3.1.10"
     }
 }

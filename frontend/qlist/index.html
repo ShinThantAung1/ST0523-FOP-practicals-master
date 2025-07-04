@@ -120,7 +120,7 @@
       for (let i = 1; i <= 6; i++) {
         const questionLink = document.createElement('a');
         // This points to your frontend route — question.html reads topicId/questionId from URL
-        questionLink.href = `/frontend/questions/index.html?topicId=${topicId}&questionId=${i}`;
+        questionLink.href = `/questions/index.html?topicId=${topicId}&questionId=${i}`
         questionLink.className = 'question-card';
         questionLink.textContent = `Question ${i}`;
         questionsList.appendChild(questionLink);

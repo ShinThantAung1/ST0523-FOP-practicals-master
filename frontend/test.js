@@ -1,7 +1,7 @@
 function sendCodeToServer(codeContent) {
     const studentId = "p1121782";
     const className = "DIT/FT/1A/01";
-    const mockExecution = true;
+    const mockExecution = false;
     const topicId = 3;
     const questionNumber = "q2";
   
