@@ -6,7 +6,7 @@
  */
 
 const fahrenheit = 100;
-const celsius; // Calculate the temperature in celsius here
+const celsius = 0; // Calculate the temperature in celsius here
 
 console.log("Q5: " + celsius);
 

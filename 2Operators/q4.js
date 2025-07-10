@@ -5,7 +5,7 @@
  */
 const firstAngle = 33;
 const secondAngle = 56;
-const thirdAngle; // Calculate the third angle here
+const thirdAngle = 0; // Calculate the third angle here
 
 console.log("Q4 :" + thirdAngle);
 

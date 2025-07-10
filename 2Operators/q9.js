@@ -5,7 +5,7 @@
 const name = "Jes";
 const hobby = "Programming";
 const color = "White";
-const sentence; // Create the sentence here
+const sentence = ""; // Create the sentence here
 console.log("Q9 " + sentence);
 
 // Run the program with `node ./q9.js`
