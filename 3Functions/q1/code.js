@@ -20,12 +20,6 @@
  * 3. Return the variable
  */
 function sumTwoValue(num1,num2) {
-    a = parseInt(num1,10);
-    b = parseInt(num2,10);
-    let result = 0;
-    const sum = a+b;
-    result = sum;
-    return result;
 }
 
 // Your own test cases

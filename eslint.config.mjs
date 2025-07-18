@@ -6,6 +6,19 @@ import { defineConfig } from "eslint/config";
 
 
 export default defineConfig([
+  {
+    ignores: [
+      "1Introduction/**",
+      "2Operators/**",
+      "3Functions/**",
+      "4Selections/**",
+      "5Loops/**",
+      "6Arrays/**",
+      "7While/**",
+      "8Objects/**",
+      "9ProblemSolving/**"
+    ],
+  },
   { files: ["**/*.{js,mjs,cjs}"], plugins: { js }, extends: ["js/recommended"] },
   { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
   { files: ["**/*.mjs"],languageOptions: {sourceType: "module"} },
