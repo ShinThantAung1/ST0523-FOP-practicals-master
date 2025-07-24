@@ -185,7 +185,7 @@
       document.getElementById('question-title').innerText = '❌ Missing topicId or questionId in the URL';
       document.getElementById('question-description').innerText = '';
       editor.setValue('// Invalid question');
-    } else {
+    }else {
       fetch(`https://fop-practical-remote-execution.onrender.com/Db/questions/${topicId}/${questionId}`)
         .then(response => {
           if (!response.ok) throw new Error('Question not found');
@@ -207,13 +207,26 @@
     // 🟢 Connect CodeMirror to run.js
     document.getElementById("run-btn").addEventListener("click", () => {
       const codeContent = editor.getValue();
+    if (typeof checkUserSession !== "function") {
+      console.error("❌ checkUserSession not loaded");
+      return;
+    }
+
+    checkUserSession().then(user => {
+      if (!user || !user.id || !user.ichat) {
+        console.warn("❌ Session invalid or missing data");
+        return;
+      }
+
       if (typeof sendCodeToServer === 'function') {
-        sendCodeToServer(codeContent);
+        sendCodeToServer(codeContent, user.id, user.ichat);
       } else {
         console.error('❌ sendCodeToServer function is not defined.');
       }
     });
+    });
   </script>
-  <script src="/test.js"></script>
+  <script src="../session.js"></script>
+  <script src="../test.js"></script>
 </body>
 </html>

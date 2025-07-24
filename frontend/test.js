@@ -1,6 +1,4 @@
-function sendCodeToServer(codeContent) {
-    const studentId = "p1121782";
-    const className = "DIT/FT/1A/01";
+function sendCodeToServer(codeContent, id, ichat) {
     const mockExecution = true;
     const topicId = 3;
     const questionNumber = "q2";
@@ -16,8 +14,8 @@ function sendCodeToServer(codeContent) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         code: codeContent,
-        studentId,
-        className,
+        id: id,
+        ichat: ichat,
         Topicid: topicId,
         Questionid: questionNumber,
         mockExecution
