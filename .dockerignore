@@ -1,2 +1,7 @@
-**/commits.json
 node_modules/
+.env
+.git
+.gitignore
+**/commits.json
+.vscode/
+coverage/
