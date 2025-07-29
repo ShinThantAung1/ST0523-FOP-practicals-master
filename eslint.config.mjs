@@ -1,21 +1,36 @@
 import js from "@eslint/js";
+import jsonPlugin from "@eslint/json";
+import cssPlugin from "@eslint/css";
 import globals from "globals";
-import json from "@eslint/json";
-import css from "@eslint/css";
 import { defineConfig } from "eslint/config";
-
 
 export default defineConfig([
   {
-    ignores: [
-      ".vscode/**"
-    ],
+    ignores: [".vscode/**", "node_modules/**", "package-lock.json", "package.json" ],
   },
-  { files: ["**/*.{js,mjs,cjs}"], plugins: { js }, extends: ["js/recommended"] },
-  { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
-  { files: ["**/*.mjs"],languageOptions: {sourceType: "module"} },
-  { files: ["**/*.{js,mjs,cjs}"], languageOptions: { globals: {...globals.browser, ...globals.node} } },
-  { files: ["**/*.json"], plugins: { json }, language: "json/json", extends: ["json/recommended"] },
-  { files: ["**/*.jsonc"], plugins: { json }, language: "json/jsonc", extends: ["json/recommended"] },
-  { files: ["**/*.css"], plugins: { css }, language: "css/css", extends: ["css/recommended"] }
+
+  {
+    files: ["**/*.{js,mjs,cjs}"],
+    languageOptions: {
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+      },
+    },
+    plugins: {
+      js,
+    },
+    rules: js.configs.recommended.rules,
+  },
+
+  {
+    files: ["**/*.json"],
+    ...jsonPlugin.configs.recommended,
+  },
+
+  {
+    files: ["**/*.css"],
+    ...cssPlugin.configs.recommended,
+  },
 ]);
