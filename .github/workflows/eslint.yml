@@ -2,11 +2,11 @@ name: ESLint
 
 on:
   push:
-    branches: [ "**" ]
+    branches: ["**"]
   pull_request:
-    branches: [ "**" ]
+    branches: ["**"]
   schedule:
-    - cron: '17 23 * * 4'
+    - cron: "17 23 * * 4"
   workflow_dispatch:
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
             --output-file eslint-results.sarif
         continue-on-error: false
 
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v3
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: eslint-results.sarif
