@@ -6,6 +6,19 @@ const { exit } = require('process');
 const studentId = "p1121782";
 const className = "DIT/FT/1A/01";
 const mockExecution = false;
+const { ESLint } = require("eslint");
+
+async function lintCode(code) {
+  const eslint = new ESLint();
+  const results = await eslint.lintText(code);
+  const formatter = await eslint.loadFormatter("stylish");
+  const output = formatter.format(results);
+  return {
+    report: output,
+    hasErrors: results.some(r => r.errorCount > 0)
+  };
+}
+
 if (
     !studentId ||
     !className ||
@@ -31,7 +44,21 @@ const filePath = `./${questionNumber}/code.js`;
 
 const codeContent = fs.readFileSync(filePath, 'utf-8');
 
-fetch('http://localhost:3000/evaluate', {
+// Run ESLint on code before sending
+lintCode(codeContent).then(({ report, hasErrors }) => {
+  if (report.trim()) {
+    console.log("ESLint Report:\n" + report);
+  } else {
+    console.log("No lint issues found.");
+  }
+
+  // Block execution on lint errors
+  if (hasErrors) {
+    console.error("Code submission blocked due to ESLint errors.");
+    process.exit(1);
+  }
+
+  return fetch('http://localhost:3000/evaluate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -40,21 +67,22 @@ fetch('http://localhost:3000/evaluate', {
       className: className,
       Questionid: questionNumber,
       Topicid: topicId,
-      mockExecution : mockExecution 
+      mockExecution: mockExecution
     })
-  })
-  .then(async (res) => {
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(errText);
-    }
-    return res.json();
-  })
-  .then(data => {
-    console.log('✅ Code sent successfully:', data);
-  })
-  .catch(err => {
-    console.error('❌ Error sending code:', err.message);
+  });
+})
+.then(async (res) => {
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(errText);
+  }
+  return res.json();
+})
+.then(data => {
+  console.log('✅ Code sent successfully:', data);
+})
+.catch(err => {
+  console.error('❌ Error sending code:', err.message);
 });
 
 // Get all folders in the current directory
