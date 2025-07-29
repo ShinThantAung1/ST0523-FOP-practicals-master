@@ -8,15 +8,6 @@ import { defineConfig } from "eslint/config";
 export default defineConfig([
   {
     ignores: [
-      "1Introduction/**",
-      "2Operators/**",
-      "3Functions/**",
-      "4Selections/**",
-      "5Loops/**",
-      "6Arrays/**",
-      "7While/**",
-      "8Objects/**",
-      "9ProblemSolving/**",
       ".vscode/**"
     ],
   },
