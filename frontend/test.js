@@ -27,7 +27,7 @@ function sendCodeToServer(codeContent) {
       Questionid: questionNumber,
       mockExecution,
       useCustomInput: customInputUsed,
-      customInput: customInputUsed ? customInputValue : null
+      customInput: customInputUsed ? customInputValue.split(",").map(v => isNaN(v.trim()) ? v.trim() : Number(v.trim())): null
     })
   })
   .then(async (res) => {
@@ -43,26 +43,46 @@ function sendCodeToServer(codeContent) {
         return;
       }
 
-      const { results } = data;
-      outputEl.innerHTML = ""; // Clear previous content
+      const { results } = data; 
+      outputEl.innerHTML = "";
+
+   
+      if (customInputUsed) {
+      const customResultBox = document.createElement("div");
+      customResultBox.style.padding = "10px";
+      customResultBox.style.border = "1px solid #e5e7eb";
+      customResultBox.style.borderRadius = "8px";
+      customResultBox.style.backgroundColor = "#f9fafb";
+      customResultBox.innerHTML = `
+      <strong>🧪 Custom Test Case</strong><br/>
+      <strong>Input:</strong> ${JSON.stringify(results[0].input)}<br/>
+      <strong>Output:</strong> ${JSON.stringify(results[0].output)}
+      `;
+      outputEl.appendChild(customResultBox);
+      return;
+      }
+      
 
       const resultContainer = document.createElement("div");
       resultContainer.style.fontFamily = "monospace";
 
-      // Circles
+      
       const circlesContainer = document.createElement("div");
       circlesContainer.style.display = "flex";
       circlesContainer.style.flexWrap = "wrap";
       circlesContainer.style.gap = "8px";
       circlesContainer.style.marginBottom = "16px";
 
-      // Detail container
+      
       const detailsContainer = document.createElement("div");
       detailsContainer.id = "details-container";
 
+      
+
       results.forEach((r, index) => {
         const circle = document.createElement("div");
-        circle.title = `Test Case ${r.testCase}`;
+        const testCaseNumber = r.testCase ?? r.testcase ?? (index + 1);
+        circle.title = `Test Case ${testCaseNumber}`;
         circle.style.width = "18px";
         circle.style.height = "18px";
         circle.style.borderRadius = "50%";
@@ -70,7 +90,7 @@ function sendCodeToServer(codeContent) {
         circle.style.backgroundColor = r.passed ? "#22c55e" : "#ef4444";
 
         circle.addEventListener("click", () => {
-          detailsContainer.innerHTML = ""; // Clear previous box
+          detailsContainer.innerHTML = "";
 
           const box = document.createElement("div");
           box.style.marginTop = "8px";
@@ -80,16 +100,15 @@ function sendCodeToServer(codeContent) {
           box.style.backgroundColor = "#f9fafb";
 
           if (index < 2) {
-            // First 2 test cases: show full detail
             box.innerHTML = `
-              <strong>🔍 Test Case ${r.testCase}</strong><br/>
+              <strong>🔍 Test Case ${testCaseNumber}</strong><br/>
               <strong>Input:</strong> ${JSON.stringify(r.input)}<br/>
+              ${r.actual_output !== undefined ? `<strong>Output:</strong> ${JSON.stringify(r.actual_output)}<br/>` : ''}
               <strong>Result:</strong> <span style="color: ${r.passed ? '#16a34a' : '#dc2626'};">${r.passed ? '✅ Passed' : '❌ Failed'}</span>
             `;
           } else {
-            // Others: show summary only
             box.innerHTML = `
-              <strong>Test Case ${r.testCase}:</strong> <span style="color: ${r.passed ? '#16a34a' : '#dc2626'};">${r.passed ? '✅ Passed' : '❌ Failed'}</span>
+              <strong>Test Case ${testCaseNumber}:</strong> <span style="color: ${r.passed ? '#16a34a' : '#dc2626'};">${r.passed ? '✅ Passed' : '❌ Failed'}</span>
             `;
           }
 
